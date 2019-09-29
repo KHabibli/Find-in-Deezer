@@ -1,0 +1,55 @@
+<div class="container">
+<div class="row">
+    <div class="col-sm-4 text-center mt-2">
+    <a href="{{artist_link}}" target="_blanc">
+        <img src="{{artist_picture}}" width="150px" alt="" class="img img-fluid">
+    </a>
+    </div>
+    <div class="col-sm-8 mt-sm-4">
+    <table class="table">
+        <tr>
+            <th>
+            Number of albums
+            </th>
+            <th>
+                <span class="badge badge-dark badge-pill" id="albums">{{albums}}</span>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                Number of fans
+            </th>
+            <th>
+                <span class="badge badge-dark" id="fans">{{fans}}</span>
+            </th>
+        </tr>
+    </table>
+    </div>
+</div>
+<hr>
+<ul class="container mb-4 list-group">
+{{#each songs}}
+    <form action="/myList" method="post">
+    <input type="text" value="{{song_id}}" name="id" hidden>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-sm-7">
+                    {{!-- <i class="fas fa-minus mr-2"></i> --}}
+                    <span name="name"><button type="submit" id="plus"><i class="fas fa-plus mr-2"></i></button>{{title}} - from {{album}}</span>
+                </div>
+                <div class="col-sm-2">
+                    <span name="duration"><i class="fab fa-creative-commons-sampling mr-2"></i>{{duration}}</span>
+                </div>
+                <div class="col-sm-3">
+                    <a href="{{link}}" class="btn btn-dark mb-1" target="_blank">Listen in Deezer</a></span>
+                </div>
+            </div>
+        </li>
+    </form>
+{{else}}
+
+{{/each}}
+<!-- <i class="fab fa-gratipay text-danger"></i>  -->
+
+</ul>
+</div>

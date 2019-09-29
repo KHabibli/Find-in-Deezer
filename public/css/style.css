@@ -1,0 +1,25 @@
+
+img {
+    border-radius: 50%;
+}
+
+.song{
+    text-overflow: ellipsis
+}
+i:hover, a{
+    cursor: pointer;
+}
+
+
+#mylist{
+    border-bottom: 1px solid black;
+    max-width: 200px;
+    margin: auto;
+    padding-bottom: 5px; 
+}
+
+#plus{
+    background:none;
+    margin: 0;
+    border: 0;
+}
