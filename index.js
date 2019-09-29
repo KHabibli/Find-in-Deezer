@@ -12,7 +12,7 @@ const deezerArtist = require('./utils/deezerArtist')
 const deezerSong = require('./utils/deezerSong')
 
 const app = express()
-const port =  5000
+const port = process.env.PORT || 5000
 
 // Load keys
 const keys = require('./config/keys')
