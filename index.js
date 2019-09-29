@@ -14,11 +14,14 @@ const deezerSong = require('./utils/deezerSong')
 const app = express()
 const port =  5000
 
+// Load keys
+const keys = require('./config/keys')
+
 // Static Folder
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Connecting to the database
-mongoose.connect('mongodb://127.0.0.1:27017/find-in-deezer', {
+mongoose.connect(keys.mongoURI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true 
