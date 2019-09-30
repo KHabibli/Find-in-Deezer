@@ -10,6 +10,7 @@ const session = require('express-session')
 const methodOverride = require('method-override')
 const deezerArtist = require('./utils/deezerArtist')
 const deezerSong = require('./utils/deezerSong')
+const { ensureAuthenticated, deleteSong, checkList } = require('./helpers/auth')
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -78,11 +79,11 @@ app.listen(port , () => {
 })
 
 
-app.get('/' , (req,res) => {
+app.get('/' , ensureAuthenticated, (req,res) => {
     res.render('index')
 })
 
-app.post('/artist', (req, res) => {
+app.post('/artist',ensureAuthenticated,checkList, (req, res) => {
     if (!req.body.artist) {
         return res.render('index',{
             errors: [{
@@ -98,8 +99,6 @@ app.post('/artist', (req, res) => {
                 }]
             })
         }
-        
-
         res.render('result', {
             albums: data.number_of_albums,
             fans: data.fans,
@@ -183,14 +182,14 @@ app.post('/register', (req, res) => {
     }
 })
 
-app.get('/welcome', (req, res) => {
+app.get('/welcome', ensureAuthenticated, (req, res) => {
     res.render('welcome', {
         user: req.user
     })
 })
 
 
-app.get('/myList', (req, res) => {
+app.get('/myList',ensureAuthenticated, (req, res) => {
     Playlist.find({user:req.user.id}).then(data => {
         res.render('myList', {
             data
@@ -199,7 +198,7 @@ app.get('/myList', (req, res) => {
     
 })
 
-app.post('/myList', (req, res) => {
+app.post('/myList',ensureAuthenticated, (req, res) => {
     deezerSong(req.body.id, (error, data) => {
         if(error) {
             return res.render('index',{
@@ -214,6 +213,7 @@ app.post('/myList', (req, res) => {
             album: data.album,
             link: data.link,
             id: data.id,
+            artist: data.artist,
             user: req.user.id
         })
         newSong.save().then(data => {
@@ -223,7 +223,7 @@ app.post('/myList', (req, res) => {
         })
     })
 
-app.delete('/myList/:id', (req, res) => {
+app.delete('/myList/:id',deleteSong, (req, res) => {
     Playlist.findByIdAndRemove(req.params.id).then(() => {
         req.flash('success_msg','Song is deleted')
         res.redirect('/myList')

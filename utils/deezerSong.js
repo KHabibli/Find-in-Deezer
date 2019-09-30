@@ -20,7 +20,8 @@ const deezerSong = (id, callback) => {
             duration,
             album: body.album.title,
             link: body.link,
-            id
+            id,
+            artist: body.artist.name
         })
       });
 

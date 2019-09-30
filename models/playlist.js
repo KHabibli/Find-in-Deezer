@@ -3,8 +3,7 @@ const mongoose = require('mongoose')
 const playlistSchema = new mongoose.Schema({
     id: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     title: {
         type: String,
@@ -21,6 +20,9 @@ const playlistSchema = new mongoose.Schema({
     link: {
         type: String,
         required: true
+    },
+    artist : {
+        type: String
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
