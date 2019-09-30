@@ -21,7 +21,7 @@ const keys = require('./config/keys')
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Connecting to the database
-mongoose.connect(keys.mongoURI, {
+mongoose.connect('mongodb+srv://findindeezer:iostream14@findindeezer-f7yf1.mongodb.net/findindeezer?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true 
@@ -217,14 +217,11 @@ app.post('/myList', (req, res) => {
             user: req.user.id
         })
         newSong.save().then(data => {
-            req.user.song_ids.push(newSong.id)
-            req.user.save().then(data => {
                 req.flash('success_msg','New song is added to your list')
                 res.redirect('/myList')
             })
         })
     })
-})
 
 app.delete('/myList/:id', (req, res) => {
     Playlist.findByIdAndRemove(req.params.id).then(() => {
