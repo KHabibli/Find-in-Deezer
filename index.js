@@ -192,7 +192,6 @@ app.get('/welcome', (req, res) => {
 
 app.get('/myList', (req, res) => {
     Playlist.find({user:req.user.id}).then(data => {
-        console.log(data)
         res.render('myList', {
             data
         })
